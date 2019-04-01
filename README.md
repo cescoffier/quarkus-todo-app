@@ -23,5 +23,5 @@ docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 \
 mvn compile quarkus:dev
 ```
 
-Open: http://localhost:8080/todo.html
+Open: http://localhost:8080/
 

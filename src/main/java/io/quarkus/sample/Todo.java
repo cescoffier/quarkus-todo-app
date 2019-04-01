@@ -29,4 +29,8 @@ public class Todo extends PanacheEntity {
         return list("completed", true);
     }
 
+    public static long deleteCompleted() {
+        return delete("completed", true);
+    }
+
 }

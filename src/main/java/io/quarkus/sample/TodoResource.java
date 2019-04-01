@@ -6,9 +6,11 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import java.util.List;
 
-@Path("/")
+
+@Path("/api")
 @Produces("application/json")
 @Consumes("application/json")
 public class TodoResource {
@@ -28,7 +30,7 @@ public class TodoResource {
     public Todo getOne(@PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
         if (entity == null) {
-            throw new WebApplicationException("Todo with id of " + id + " does not exist.", 404);
+            throw new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
         }
         return entity;
     }
@@ -40,7 +42,7 @@ public class TodoResource {
         todo.title = item.title;
         todo.order = item.order;
         todo.persist();
-        return Response.ok(todo).status(201).build();
+        return Response.status(Status.CREATED).entity(todo).build();
     }
 
     @PATCH
@@ -48,19 +50,18 @@ public class TodoResource {
     @Transactional
     public Response update(@Valid Todo todo, @PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
+        entity.id = id;
         entity.completed = todo.completed;
         entity.order = todo.order;
         entity.title = todo.title;
         entity.url = todo.url;
-        entity.id = id;
-        entity.url = todo.url;
-        return Response.ok(entity).status(200).build();
+        return Response.ok(entity).build();
     }
 
     @DELETE
     @Transactional
-    public Response deleteAll() {
-        Todo.deleteAll();
+    public Response deleteCompleted() {
+        Todo.deleteCompleted();
         return Response.noContent().build();
     }
 
@@ -70,10 +71,10 @@ public class TodoResource {
     public Response deleteOne(@PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
         if (entity == null) {
-            throw new WebApplicationException("Todo with id of " + id + " does not exist.", 404);
+            throw new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
         }
         entity.delete();
-        return Response.status(204).build();
+        return Response.noContent().build();
     }
 
 }
