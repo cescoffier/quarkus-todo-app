@@ -73,11 +73,9 @@
                 this.newTodo = '';
             },
 
-            removeTodo: function (todo) {
-                var index = this.todos.indexOf(todo);
-                this.todos.splice(index, 1);
-
-                todoStorage.delete(todo);
+            removeTodo: async function (todo) {
+                await todoStorage.delete(todo);
+                await this.reload();
             },
 
             toggleTodo: function (todo) {
@@ -108,8 +106,14 @@
                 todo.title = this.beforeEditCache;
             },
 
-            removeCompleted: function () {
-                this.todos = filters.active(this.todos);
+            removeCompleted: async function () {
+                await todoStorage.deleteCompleted();
+                await this.reload();
+            },
+
+            reload: async function () {
+                const data = await todoStorage.fetch();
+                app.todos = data;
             }
         },
 
@@ -125,8 +129,7 @@
         },
 
         mounted : async function() {
-            const data = await todoStorage.fetch();
-            app.todos = data;
+            this.reload();
         }
     });
 
