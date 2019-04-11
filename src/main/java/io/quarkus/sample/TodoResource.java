@@ -38,11 +38,8 @@ public class TodoResource {
     @POST
     @Transactional
     public Response create(@Valid Todo item) {
-        Todo todo = new Todo();
-        todo.title = item.title;
-        todo.order = item.order;
-        todo.persist();
-        return Response.status(Status.CREATED).entity(todo).build();
+        item.persist();
+        return Response.status(Status.CREATED).entity(item).build();
     }
 
     @PATCH
