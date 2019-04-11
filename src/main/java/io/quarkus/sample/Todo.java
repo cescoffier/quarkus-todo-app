@@ -21,11 +21,11 @@ public class Todo extends PanacheEntity {
 
     public String url;
 
-    public static List<Todo> findNotCompleted(String name) {
+    public static List<Todo> findNotCompleted() {
         return list("completed", false);
     }
 
-    public static List<Todo> findCompleted(String name) {
+    public static List<Todo> findCompleted() {
         return list("completed", true);
     }
 
