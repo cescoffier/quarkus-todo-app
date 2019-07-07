@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    machine:
+      enabled: true
+    steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - mvn-{{ checksum "pom.xml" }}
+          - mvn-
+    - run:
+        command: ./mvnw verify
+    - run:
+        name: Save test results
+        command: |
+          mkdir -p ~/junit/
+          find target/surefire-reports -type f -name "*.xml" -exec cp {} ~/junit/ \;
+        when: always
+    - save_cache:
+        paths:
+          - ~/.m2
+        key: mvn-{{ checksum "pom.xml" }}
+    - store_test_results:
+        path: ~/junit
+    - store_artifacts:
+        path: ~/junit

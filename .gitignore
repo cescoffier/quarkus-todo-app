@@ -173,3 +173,6 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
+# Eclipse Metadata
+.project
+.classpath
