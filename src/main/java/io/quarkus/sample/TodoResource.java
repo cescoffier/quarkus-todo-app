@@ -1,6 +1,7 @@
 package io.quarkus.sample;
 
 import io.quarkus.panache.common.Sort;
+import org.jboss.logging.Logger;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -14,6 +15,8 @@ import java.util.List;
 @Produces("application/json")
 @Consumes("application/json")
 public class TodoResource {
+
+    private static final Logger LOGGER = Logger.getLogger(TodoResource.class);
 
     @OPTIONS
     public Response opt() {
