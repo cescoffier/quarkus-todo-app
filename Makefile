@@ -20,10 +20,10 @@ kube-build:
 
 
 kube-clean:
-	kubectl delete service putcachejpa --namespace=${NS}
-	kubectl delete deployments putcachejpa --namespace=${NS}
-	kubectl delete svc rest-crud --namespace=${NS}
-	kubectl delete pods rest-crud --namespace=${NS}
+	kubectl delete service putcachejpa
+	kubectl delete deployments putcachejpa
+	kubectl delete svc rest-crud
+	kubectl delete pods rest-crud
 
 
 kube-namespace:
@@ -33,25 +33,23 @@ kube-namespace:
 
 kube-run-app:
 	kubectl run putcachejpa \
-      --image=putcachejpa/putcachejpa:latest \
-      --port=8080 \
-      --image-pull-policy=IfNotPresent \
-      --namespace=${NS}
-	kubectl expose deployment putcachejpa --type=NodePort --namespace=${NS}
+		--image=putcachejpa/putcachejpa:latest \
+		--port=8080 \
+		--image-pull-policy=IfNotPresent
+	kubectl expose deployment putcachejpa --type=NodePort
 	minikube service putcachejpa --url -n putcachejpa
 
 
 kube-run-db:
 	kubectl run ${DB_NAME} \
-      --generator=run-pod/v1 \
-      --image=postgres:10.5 \
-      --port=5432 \
-      --env=POSTGRES_USER=restcrud \
-      --env=POSTGRES_PASSWORD=restcrud \
-      --env=POSTGRES_DB=rest-crud \
-      --image-pull-policy=IfNotPresent \
-      --namespace=${NS}
-	kubectl expose pod ${DB_NAME} --namespace=${NS}
+		--generator=run-pod/v1 \
+		--image=postgres:10.5 \
+		--port=5432 \
+		--env=POSTGRES_USER=restcrud \
+		--env=POSTGRES_PASSWORD=restcrud \
+		--env=POSTGRES_DB=rest-crud \
+		--image-pull-policy=IfNotPresent
+	kubectl expose pod ${DB_NAME}
 
 
 minikube-config:
@@ -64,19 +62,20 @@ minikube-config:
 minikube-start:
 	minikube start
 	kubectl create namespace ${NS}
+	kubectl config set-context --current --namespace=${NS}
 
 
 run-db:
 	docker run \
-     --ulimit memlock=-1:-1 \
-     -it \
-     --rm=true \
-     --memory-swappiness=0 \
-     --name postgres-quarkus-rest-http-crud \
-     -e POSTGRES_USER=restcrud \
-     -e POSTGRES_PASSWORD=restcrud \
-     -e POSTGRES_DB=rest-crud \
-     -p 5432:5432 postgres:10.5
+		--ulimit memlock=-1:-1 \
+		-it \
+		--rm=true \
+		--memory-swappiness=0 \
+		--name db \
+		-e POSTGRES_USER=restcrud \
+		-e POSTGRES_PASSWORD=restcrud \
+		-e POSTGRES_DB=rest-crud \
+		-p 5432:5432 postgres:10.5
 
 
 help:
