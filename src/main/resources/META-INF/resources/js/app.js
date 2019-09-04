@@ -20,6 +20,25 @@
         }
     };
 
+    exports.info = new Vue({
+        el: '.info',
+
+        data: {
+            podName: ''
+        },
+
+        methods: {
+            reload: async function () {
+                const podName = await kubernetes.podName();
+                info.podName = podName;
+            }
+        },
+
+        mounted : async function() {
+            this.reload();
+        }
+    });
+
     exports.app = new Vue({
 
         // the root element that will be compiled
