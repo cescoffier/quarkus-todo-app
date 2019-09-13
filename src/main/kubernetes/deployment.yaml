@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: putcachejpa
+  labels:
+    app: putcachejpa
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: putcachejpa
+  template:
+    metadata:
+      labels:
+        app: putcachejpa
+    spec:
+      containers:
+        - name: putcachejpa
+          image: putcachejpa/putcachejpa
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
