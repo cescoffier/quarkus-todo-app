@@ -24,18 +24,23 @@ public class TodoResource {
     }
 
     @GET
-    public List<Todo> getAll() {
-        return Todo.listAll(Sort.by("order"));
+    public Response getAll() {
+        final List<Todo> todos = Todo.listAll(Sort.by("order"));
+        return Response.ok(todos)
+            .header("Pod-Name", PodResource.getPodName())
+            .build();
     }
 
     @GET
     @Path("/{id}")
-    public Todo getOne(@PathParam("id") Long id) {
+    public Response getOne(@PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
         if (entity == null) {
             throw new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
         }
-        return entity;
+        return Response.ok(entity)
+            .header("Pod-Name", PodResource.getPodName())
+            .build();
     }
 
     @POST
