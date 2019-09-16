@@ -25,7 +25,11 @@ public class TodoResource {
 
     @GET
     public Response getAll() {
-        final List<Todo> todos = Todo.listAll(Sort.by("order"));
+        final List<Todo> todos = Todo.findAllCacheable();
+//        LOGGER.infof("%s | %s",
+//            CacheUtil.showEntityCacheStats("getAll", Todo.class)
+//            , CacheUtil.showQueryCacheStats()
+//        );
         return Response.ok(todos)
             .header("Pod-Name", PodResource.getPodName())
             .build();
@@ -38,6 +42,7 @@ public class TodoResource {
         if (entity == null) {
             throw new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
         }
+        LOGGER.info(CacheUtil.showEntityCacheStats("getOne", Todo.class));
         return Response.ok(entity)
             .header("Pod-Name", PodResource.getPodName())
             .build();

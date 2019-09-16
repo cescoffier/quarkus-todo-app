@@ -1,16 +1,22 @@
 package io.quarkus.sample;
 
+import io.quarkus.hibernate.orm.panache.Panache;
+import org.hibernate.Session;
 import org.hibernate.stat.CacheRegionStatistics;
 import org.hibernate.stat.Statistics;
 
 public class CacheUtil {
 
     private static Statistics getStatistics() {
-        return null;
+        return Panache.getEntityManager()
+            .unwrap(Session.class)
+            .getSessionFactory()
+            .getStatistics();
     }
 
     private static CacheRegionStatistics getEntityCacheStats(Class<?> entityType) {
-        return null;
+        return getStatistics()
+            .getDomainDataRegionStatistics(entityType.getName());
     }
 
     static String showEntityCacheStats(String method, Class<?> entityType) {
