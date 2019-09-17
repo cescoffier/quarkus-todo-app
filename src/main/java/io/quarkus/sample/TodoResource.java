@@ -1,6 +1,5 @@
 package io.quarkus.sample;
 
-import io.quarkus.panache.common.Sort;
 import org.jboss.logging.Logger;
 
 import javax.transaction.Transactional;
@@ -26,10 +25,10 @@ public class TodoResource {
     @GET
     public Response getAll() {
         final List<Todo> todos = Todo.findAllCacheable();
-//        LOGGER.infof("%s | %s",
-//            CacheUtil.showEntityCacheStats("getAll", Todo.class)
-//            , CacheUtil.showQueryCacheStats()
-//        );
+        LOGGER.infof("%s | %s",
+            CacheUtil.showEntityCacheStats("getAll", Todo.class)
+            , CacheUtil.showQueryCacheStats()
+        );
         return Response.ok(todos)
             .header("Pod-Name", PodResource.getPodName())
             .build();
