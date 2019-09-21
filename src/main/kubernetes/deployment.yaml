@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: putcachejpa
+  name: todoapp
   labels:
-    app: putcachejpa
+    app: todoapp
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: putcachejpa
+      app: todoapp
   template:
     metadata:
       labels:
-        app: putcachejpa
+        app: todoapp
     spec:
       containers:
-        - name: putcachejpa
-          image: putcachejpa/putcachejpa
+        - name: todoapp
+          image: todoapp/todoapp
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

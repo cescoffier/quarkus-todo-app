@@ -1,6 +1,6 @@
 .PHONY: clean kube-build-image minikube-config minikube-run-db help
 
-PROFILE ?= putcachejpa
+PROFILE ?= todoapp
 DB_NAME ?= rest-crud
 NS ?= ${PROFILE}
 
@@ -16,12 +16,12 @@ clean:
 
 
 kube-build:
-	docker build -f src/main/docker/Dockerfile.kubernetes -t putcachejpa/putcachejpa .
+	docker build -f src/main/docker/Dockerfile.kubernetes -t todoapp/todoapp .
 
 
 kube-clean:
-	kubectl delete service putcachejpa
-	kubectl delete deployments putcachejpa
+	kubectl delete service todoapp
+	kubectl delete deployments todoapp
 	kubectl delete svc rest-crud
 	kubectl delete pods rest-crud
 
@@ -32,12 +32,12 @@ kube-namespace:
 
 
 kube-run-app:
-	kubectl run putcachejpa \
-		--image=putcachejpa/putcachejpa:latest \
+	kubectl run todoapp \
+		--image=todoapp/todoapp:latest \
 		--port=8080 \
 		--image-pull-policy=IfNotPresent
-	kubectl expose deployment putcachejpa --type=NodePort
-	minikube service putcachejpa --url -n putcachejpa
+	kubectl expose deployment todoapp --type=NodePort
+	minikube service todoapp --url -n todoapp
 
 
 kube-run-db:
