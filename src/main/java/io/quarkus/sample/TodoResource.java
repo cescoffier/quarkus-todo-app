@@ -1,6 +1,6 @@
 package io.quarkus.sample;
 
-import io.quarkus.panache.common.Sort;
+import org.jboss.logging.Logger;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -15,24 +15,36 @@ import java.util.List;
 @Consumes("application/json")
 public class TodoResource {
 
+    private static final Logger LOGGER = Logger.getLogger(TodoResource.class);
+
     @OPTIONS
     public Response opt() {
         return Response.ok().build();
     }
 
     @GET
-    public List<Todo> getAll() {
-        return Todo.listAll(Sort.by("order"));
+    public Response getAll() {
+        final List<Todo> todos = Todo.findAllCacheable();
+        LOGGER.infof("%s | %s",
+            CacheUtil.showEntityCacheStats("getAll", Todo.class)
+            , CacheUtil.showQueryCacheStats()
+        );
+        return Response.ok(todos)
+            .header("Pod-Name", PodResource.getPodName())
+            .build();
     }
 
     @GET
     @Path("/{id}")
-    public Todo getOne(@PathParam("id") Long id) {
+    public Response getOne(@PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
         if (entity == null) {
             throw new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
         }
-        return entity;
+        LOGGER.info(CacheUtil.showEntityCacheStats("getOne", Todo.class));
+        return Response.ok(entity)
+            .header("Pod-Name", PodResource.getPodName())
+            .build();
     }
 
     @POST
