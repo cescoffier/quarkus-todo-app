@@ -2,11 +2,6 @@
 
 [![CircleCI](https://circleci.com/gh/cescoffier/quarkus-todo-app.svg?style=svg)](https://circleci.com/gh/cescoffier/quarkus-todo-app)
 
-## Prerequisites
-
-* You need the _master_ branch of Quarkus (or Quarkus 0.13.0+)
-
-
 ## Database
 
 Run:
@@ -25,4 +20,9 @@ mvn compile quarkus:dev
 ```
 
 Open: http://localhost:8080/
+
+## Variants:
+
+* The `master` branch provides a simple REST application: https://github.com/cescoffier/quarkus-todo-app
+* The `caching` branch adds caching to the application: https://github.com/cescoffier/quarkus-todo-app/tree/caching
 
