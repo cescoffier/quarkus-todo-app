@@ -18,4 +18,12 @@ FROM fabric8/java-jboss-openjdk8-jdk
 ENV JAVA_OPTIONS=-Dquarkus.http.host=0.0.0.0
 COPY target/lib/* /deployments/lib/
 COPY target/*-runner.jar /deployments/app.jar
+
+# run with user 1001 and be prepared for be running in OpenShift too
+RUN adduser -G root --no-create-home --disabled-password 1001 \
+  && chown -R 1001 /deployments \
+  && chmod -R "g+rwX" /deployments \
+  && chown -R 1001:root /deployments
+USER 1001
+
 ENTRYPOINT [ "/deployments/run-java.sh" ]
