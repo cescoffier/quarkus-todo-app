@@ -4,7 +4,7 @@ import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.mapper.TypeRef;
+import io.restassured.common.mapper.TypeRef;
 import org.apache.http.HttpStatus;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.*;
