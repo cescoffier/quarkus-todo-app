@@ -1,6 +1,6 @@
 # TODO Application with Quarkus
 
-[![CircleCI](https://circleci.com/gh/cescoffier/quarkus-todo-app.svg?style=svg)](https://circleci.com/gh/cescoffier/quarkus-todo-app)
+![Build](https://img.shields.io/github/workflow/status/cescoffier/quarkus-todo-app/Continuous Integration Build)
 
 ## Database
 
