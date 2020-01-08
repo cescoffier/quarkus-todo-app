@@ -1,8 +1,5 @@
 package io.quarkus.sample;
 
-import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.PortBinding;
-import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import org.apache.http.HttpStatus;
@@ -12,8 +9,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 import static io.restassured.RestAssured.*;
@@ -26,16 +23,21 @@ import static org.hamcrest.core.Is.is;
 class TodoResourceTest {
 
     @Container
-    public static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>()
+    private static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
             .withDatabaseName("rest-crud")
             .withUsername("restcrud")
             .withPassword("restcrud")
-            .withExposedPorts(5432)
-            .withCreateContainerCmdModifier(cmd ->
-                    cmd
-                            .withHostName("localhost")
-                            .withPortBindings(new PortBinding(Ports.Binding.bindPort(5432), new ExposedPort(5432)))
-            );
+            .withExposedPorts(5432);
+
+    @BeforeAll
+    private static void configure() {
+        System.setProperty("quarkus.datasource.url", DATABASE.getJdbcUrl());
+    }
+
+    @AfterAll
+    private static void cleanup() {
+        System.clearProperty("quarkus.datasource.url");
+    }
 
     @Test
     @Order(1)
