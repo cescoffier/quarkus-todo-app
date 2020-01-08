@@ -1,6 +1,6 @@
 # TODO Application with Quarkus
 
-![Build](https://img.shields.io/github/workflow/status/cescoffier/quarkus-todo-app/Continuous Integration Build)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cescoffier/quarkus-todo-app/Build)
 
 ## Database
 
