@@ -1,8 +1,6 @@
 package io.quarkus.sample;
 
-import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.PortBinding;
-import com.github.dockerjava.api.model.Ports;
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.NativeImageTest;
 import io.restassured.common.mapper.TypeRef;
 import org.apache.http.HttpStatus;
@@ -11,35 +9,20 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-import static io.restassured.RestAssured.*;
 import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.core.Is.is;
 
-@Testcontainers
 @NativeImageTest
+@QuarkusTestResource(DatabaseResource.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TodoResourceIT {
-
-    @Container
-    private static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
-            .withDatabaseName("rest-crud")
-            .withUsername("restcrud")
-            .withPassword("restcrud")
-            .withExposedPorts(5432)
-            .withCreateContainerCmdModifier(cmd ->
-                    cmd
-                            .withHostName("localhost")
-                            .withPortBindings(new PortBinding(Ports.Binding.bindPort(5499), new ExposedPort(5432)))
-            );
 
     @Test
     @Order(1)
