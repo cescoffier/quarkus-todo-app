@@ -24,5 +24,6 @@ Open: http://localhost:8080/
 ## Variants:
 
 * The `master` branch provides a simple REST application: https://github.com/cescoffier/quarkus-todo-app
+* The `reactive` branch provides a reactive version of the application: https://github.com/cescoffier/quarkus-todo-app/tree/reactive
 * The `caching` branch adds caching to the application: https://github.com/cescoffier/quarkus-todo-app/tree/caching
 
