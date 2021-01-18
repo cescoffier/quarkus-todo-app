@@ -10,7 +10,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import java.util.List;
 
 @Path("/api")
 @Produces(MediaType.APPLICATION_JSON)
@@ -46,7 +45,6 @@ public class TodoResource {
 
     @PATCH
     @Path("/{id}")
-    @Transactional
     public Uni<Todo> update(@Valid Todo todo, @PathParam("id") Long id) {
         return Todo.<Todo>findById(id)
                 .onItem().transform(entity -> {
@@ -60,14 +58,12 @@ public class TodoResource {
     }
 
     @DELETE
-    @Transactional
     public Uni<Response> deleteCompleted() {
         return Todo.deleteCompleted()
                 .onItem().transform(x -> Response.noContent().build());
     }
 
     @DELETE
-    @Transactional
     @Path("/{id}")
     public Uni<Response> deleteOne(@PathParam("id") Long id) {
         return Todo.findById(id)
