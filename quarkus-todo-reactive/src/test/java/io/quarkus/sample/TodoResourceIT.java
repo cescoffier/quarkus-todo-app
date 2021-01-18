@@ -4,10 +4,7 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.NativeImageTest;
 import io.restassured.common.mapper.TypeRef;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -21,6 +18,7 @@ import static org.hamcrest.core.Is.is;
 @NativeImageTest
 @QuarkusTestResource(DatabaseResource.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Disabled("Waiting for https://github.com/quarkusio/quarkus/issues/14264")
 public class TodoResourceIT {
 
     @Test

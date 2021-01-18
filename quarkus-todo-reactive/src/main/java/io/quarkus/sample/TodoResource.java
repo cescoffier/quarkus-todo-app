@@ -4,7 +4,6 @@ import io.quarkus.panache.common.Sort;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -37,7 +36,6 @@ public class TodoResource {
     }
 
     @POST
-    @Transactional
     public Uni<Response> create(@Valid Todo item) {
         return item.persistAndFlush()
                 .onItem().transform(x -> Response.status(Status.CREATED).entity(item).build());
