@@ -4,11 +4,10 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import org.apache.http.HttpStatus;
-import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.*;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -118,7 +117,6 @@ class TodoResourceTest {
         assertEquals(3, todos.size());
     }
 
-    @NotNull
     private TypeRef<List<Todo>> getTodoTypeRef() {
         return new TypeRef<List<Todo>>() {
             // Kept empty on purpose
