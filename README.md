@@ -1,6 +1,8 @@
-# TODO Application with Quarkus
+# TODO Application with Quarkus - Reactive Version
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cescoffier/quarkus-todo-app/Build)
+
+This version of the Quarkus TODO App uses Hibernate Reactive, RESTEasy Reactive and Mutiny.
 
 ## Database
 
@@ -24,5 +26,6 @@ Open: http://localhost:8080/
 ## Variants:
 
 * The `master` branch provides a simple REST application: https://github.com/cescoffier/quarkus-todo-app
+* The `reactive` branch provides a reactive version of the application: https://github.com/cescoffier/quarkus-todo-app/tree/reactive
 * The `caching` branch adds caching to the application: https://github.com/cescoffier/quarkus-todo-app/tree/caching
 

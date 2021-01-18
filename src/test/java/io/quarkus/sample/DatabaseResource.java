@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class DatabaseResource implements QuarkusTestResourceLifecycleManager {
 
-    private static final PostgreSQLContainer DATABASE = new PostgreSQLContainer<>("postgres:10.5")
+    private static final PostgreSQLContainer<?> DATABASE = new PostgreSQLContainer<>("postgres:10.5")
             .withDatabaseName("rest-crud")
             .withUsername("restcrud")
             .withPassword("restcrud")
@@ -17,7 +17,8 @@ public class DatabaseResource implements QuarkusTestResourceLifecycleManager {
     @Override
     public Map<String, String> start() {
         DATABASE.start();
-        return Collections.singletonMap("quarkus.datasource.url", DATABASE.getJdbcUrl());
+        return Collections.singletonMap("quarkus.datasource.reactive.url",
+                String.format("postgresql://%s:%d/rest-crud", DATABASE.getHost(), DATABASE.getMappedPort(5432)));
     }
 
     @Override

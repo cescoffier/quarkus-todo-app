@@ -4,7 +4,6 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.NativeImageTest;
 import io.restassured.common.mapper.TypeRef;
 import org.apache.http.HttpStatus;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -100,7 +99,6 @@ public class TodoResourceIT {
         assertEquals(0, todos.size());
     }
 
-    @NotNull
     private TypeRef<List<Todo>> getTodoTypeRef() {
         return new TypeRef<List<Todo>>() {
             // Kept empty on purpose
