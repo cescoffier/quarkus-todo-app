@@ -1,14 +1,17 @@
 package io.quarkus.sample;
 
 import io.quarkus.panache.common.Sort;
+import io.smallrye.common.annotation.Blocking;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.util.List;
 
 @Path("/api")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,7 +25,18 @@ public class TodoResource {
 
     @GET
     public Multi<Todo> getAll() {
+        System.out.println(Thread.currentThread().getName());
         return Todo.streamAll(Sort.by("order"));
+    }
+
+    @GET
+    @Blocking
+    @Path("/blocking")
+    public List<Todo> getAllBlocking() {
+        System.out.println(Thread.currentThread().getName());
+        return getAll()
+                .collectItems().asList()
+                .await().indefinitely();
     }
 
     @GET
@@ -52,7 +66,8 @@ public class TodoResource {
                     entity.title = todo.title;
                     entity.url = todo.url;
                     return entity;
-                });
+                })
+                .onItem().call(t -> t.flush());
     }
 
     @DELETE
