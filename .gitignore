@@ -176,3 +176,5 @@ fabric.properties
 # Eclipse Metadata
 .project
 .classpath
+
+.idea
