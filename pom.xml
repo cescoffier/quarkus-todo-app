@@ -19,7 +19,7 @@
     <quarkus-plugin.version>2.5.0.Final</quarkus-plugin.version>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>2.5.0.Final</quarkus.platform.version>
+    <quarkus.platform.version>2.5.1.Final</quarkus.platform.version>
     <testcontainers.version>1.16.2</testcontainers.version>
 
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
