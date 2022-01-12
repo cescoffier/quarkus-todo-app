@@ -22,7 +22,7 @@
     <quarkus.platform.version>2.5.0.Final</quarkus.platform.version>
     <testcontainers.version>1.16.2</testcontainers.version>
 
-    <compiler-plugin.version>3.8.1</compiler-plugin.version>
+    <compiler-plugin.version>3.9.0</compiler-plugin.version>
     <surefire-plugin.version>2.22.2</surefire-plugin.version>
   </properties>
 
