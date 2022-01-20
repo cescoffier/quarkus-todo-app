@@ -17,7 +17,7 @@ docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 \
 
 ```bash
 cd quarkus-todo
-mvn compile quarkus:dev
+mvn quarkus:dev
 ```
 
 Open: http://localhost:8080/
@@ -28,7 +28,7 @@ This version uses Hibernate Reactive, RESTEasy Reactive and Mutiny.
 
 ```bash
 cd quarkus-todo-reactive
-mvn compile quarkus:dev
+mvn quarkus:dev
 ```
 
 Open: http://localhost:8080/
