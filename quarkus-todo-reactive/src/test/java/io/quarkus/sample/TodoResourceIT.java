@@ -18,7 +18,6 @@ import static org.hamcrest.core.Is.is;
 @NativeImageTest
 @QuarkusTestResource(DatabaseResource.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Disabled("Waiting for https://github.com/quarkusio/quarkus/issues/14264")
 public class TodoResourceIT {
 
     @Test

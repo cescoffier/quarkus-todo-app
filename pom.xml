@@ -16,13 +16,14 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <quarkus-plugin.version>2.5.0.Final</quarkus-plugin.version>
+    <quarkus-plugin.version>2.6.2.Final</quarkus-plugin.version>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-    <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>2.5.0.Final</quarkus.platform.version>
-    <testcontainers.version>1.16.2</testcontainers.version>
+    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+    <quarkus.platform.version>2.6.2.Final</quarkus.platform.version>
 
-    <compiler-plugin.version>3.8.1</compiler-plugin.version>
+    <testcontainers.version>1.16.3</testcontainers.version>
+
+    <compiler-plugin.version>3.9.0</compiler-plugin.version>
     <surefire-plugin.version>2.22.2</surefire-plugin.version>
   </properties>
 
