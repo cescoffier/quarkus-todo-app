@@ -32,7 +32,7 @@ class TodoResourceTest {
 
         get("/api/1").then()
                 .statusCode(HttpStatus.SC_OK)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body("title", is("Introduction to Quarkus"))
                 .body("completed", is(true));
     }
@@ -44,13 +44,13 @@ class TodoResourceTest {
         todo.title = "testing the application";
         given()
                 .body(todo)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
                 .when()
                 .post("/api")
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body("title", is(todo.title))
                 .body("completed", is(false))
                 .body("id", is(5));
@@ -69,14 +69,14 @@ class TodoResourceTest {
         todo.completed = true;
         given()
                 .body(todo)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
                 .pathParam("id", 5)
                 .when()
                 .patch("/api/{id}")
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body("title", is(todo.title))
                 .body("completed", is(true))
                 .body("id", is(5));
@@ -86,7 +86,7 @@ class TodoResourceTest {
     @Order(4)
     void testDeletingAnItem() {
         given()
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
                 .pathParam("id", 5)
                 .when()
