@@ -25,9 +25,10 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-orm-panache</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
         </dependency>
 
         <dependency>
@@ -44,6 +45,20 @@
 
     <build>
         <plugins>
+
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>${compiler-plugin.version}</version>
+              <configuration>
+                <release>20</release>
+                <compilerArgs>
+                  <arg>--enable-preview</arg>
+                  <arg>-parameters</arg>
+                </compilerArgs>
+              </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
@@ -58,18 +73,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
-                <configuration>
-                    <release>20</release>
-                    <compilerArgs>
-                        <arg>--enable-preview</arg>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

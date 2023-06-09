@@ -4,6 +4,10 @@ import io.quarkus.panache.common.Sort;
 
 import io.smallrye.common.annotation.NonBlocking;
 import io.smallrye.common.annotation.RunOnVirtualThread;
+import jakarta.inject.Inject;
+import jakarta.transaction.NotSupportedException;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.TransactionManager;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -26,7 +30,9 @@ public class TodoResource {
     @GET
     @RunOnVirtualThread
     public List<Todo> getAll() {
-        return Todo.listAll(Sort.by("order"));
+        return Todo.listAll(
+                Sort.by("order")
+        );
     }
 
     @GET
@@ -35,23 +41,34 @@ public class TodoResource {
     public Todo getOne(@PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
         if (entity == null) {
-            throw new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
+            throw new
+                    WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
         }
         return entity;
     }
 
+
+    @Inject TransactionManager tx;
+
     @POST
-    @Transactional
+//    @Transactional - we cannot combine @Transactional and @RunOnVirtualThread, it's disabled in Quarkus
     @RunOnVirtualThread
-    public Response create(@Valid Todo item) {
-        item.persist();
-        return Response.status(Status.CREATED).entity(item).build();
+    public Response create(@Valid Todo item) throws SystemException, NotSupportedException {
+        tx.begin();
+        try {
+            item.persist();
+            tx.commit();
+            return Response.status(Status.CREATED).entity(item).build();
+        } catch (Exception e) {
+            tx.rollback();
+            return Response.serverError().build();
+        }
+
     }
 
     @PATCH
     @Path("/{id}")
     @Transactional
-    @RunOnVirtualThread
     public Response update(@Valid Todo todo, @PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
         entity.id = id;
@@ -64,7 +81,6 @@ public class TodoResource {
 
     @DELETE
     @Transactional
-    @RunOnVirtualThread
     public Response deleteCompleted() {
         Todo.deleteCompleted();
         return Response.noContent().build();
@@ -73,7 +89,6 @@ public class TodoResource {
     @DELETE
     @Transactional
     @Path("/{id}")
-    @RunOnVirtualThread
     public Response deleteOne(@PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
         if (entity == null) {
